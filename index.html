@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AbastecIA</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>AbastecIA</h1>
+    <span style="font-size:.8rem;opacity:.8">Controle de Combustível</span>
+  </div>
+</header>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" data-tab="vehicles">Veículos</button>
+    <button class="tab" data-tab="refuels">Abastecimentos</button>
+    <button class="tab" data-tab="stations">Postos</button>
+  </div>
+
+  <!-- Veículos -->
+  <div id="tab-vehicles" class="tab-content">
+    <div class="card">
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="text" id="vehicle-name" placeholder="Nome do veículo">
+        </div>
+        <div class="form-group">
+          <input type="text" id="vehicle-plate" placeholder="Placa (opcional)">
+        </div>
+        <button class="btn btn-primary" id="btn-add-vehicle">Adicionar</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Meus Veículos</h2>
+      <div id="vehicle-list"></div>
+    </div>
+  </div>
+
+  <!-- Abastecimentos -->
+  <div id="tab-refuels" class="tab-content hidden">
+    <div class="card">
+      <h2>Selecione um Veículo</h2>
+      <div class="form-group">
+        <select id="refuel-vehicle"><option value="">-- Selecione --</option></select>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row">
+        <div class="form-group">
+          <label>Data</label>
+          <input type="date" id="refuel-date">
+        </div>
+        <div class="form-group">
+          <label>KM</label>
+          <input type="number" step="0.1" id="refuel-km" placeholder="Ex: 15000">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label>Litros</label>
+          <input type="number" step="0.01" id="refuel-liters" placeholder="Ex: 45.5">
+        </div>
+        <div class="form-group">
+          <label>Preço por Litro (R$)</label>
+          <input type="number" step="0.001" id="refuel-price" placeholder="Ex: 5.899">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label>Valor Total (R$)</label>
+          <input type="number" step="0.01" id="refuel-total" placeholder="Calculado automaticamente">
+        </div>
+        <div class="form-group">
+          <label>Posto</label>
+          <select id="refuel-station"><option value="">-- Nenhum --</option></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="refuel-fulltank" checked> Tanque completo
+        </label>
+      </div>
+      <div class="form-group">
+        <label>Observações</label>
+        <textarea id="refuel-notes" rows="2"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Comprovante (foto)</label>
+        <input type="file" id="refuel-receipt" accept="image/*">
+      </div>
+      <button class="btn btn-primary" id="btn-add-refuel">Registrar Abastecimento</button>
+    </div>
+    <div class="card">
+      <h2>Histórico</h2>
+      <div id="refuel-stats"></div>
+      <div id="refuel-list"></div>
+    </div>
+  </div>
+
+  <!-- Postos -->
+  <div id="tab-stations" class="tab-content hidden">
+    <div class="card">
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="text" id="station-name" placeholder="Nome do posto">
+        </div>
+        <div class="form-group">
+          <input type="text" id="station-address" placeholder="Endereço (opcional)">
+        </div>
+        <button class="btn btn-primary" id="btn-add-station">Adicionar</button>
+      </div>
+    </div>
+    <div id="station-list"></div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
