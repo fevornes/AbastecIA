@@ -4,8 +4,8 @@
   "description": "Controle de Combustível",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a73e8",
-  "theme_color": "#1a73e8",
+  "background_color": "#72BCD2",
+  "theme_color": "#72BCD2",
   "icons": [
     { "src": "/icon.svg", "sizes": "512x512", "type": "image/svg+xml" }
   ]
