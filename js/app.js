@@ -200,12 +200,18 @@ function calcRefuel(sourceId) {
   const l = parseFloat($('refuel-liters').value) || 0;
   const p = parseFloat($('refuel-price').value) || 0;
   const t = parseFloat($('refuel-total').value) || 0;
-  if (l && p && !t) {
+  if (sourceId === 'refuel-liters' && l && p) {
     $('refuel-total').value = (l * p).toFixed(2);
-  } else if (t && l && !p) {
-    $('refuel-price').value = (t / l).toFixed(3);
-  } else if (t && p && !l) {
+  } else if (sourceId === 'refuel-price' && l && p) {
+    $('refuel-total').value = (l * p).toFixed(2);
+  } else if (sourceId === 'refuel-total' && t && p) {
     $('refuel-liters').value = (t / p).toFixed(2);
+  } else if (sourceId === 'refuel-total' && t && l) {
+    $('refuel-price').value = (t / l).toFixed(3);
+  } else if (sourceId === 'refuel-price' && t && !l) {
+    $('refuel-liters').value = (t / p).toFixed(2);
+  } else if (sourceId === 'refuel-liters' && t && !p) {
+    $('refuel-price').value = (t / l).toFixed(3);
   }
 }
 ['refuel-liters', 'refuel-price', 'refuel-total'].forEach(id => {
@@ -455,12 +461,18 @@ function openEditRefuelModal(r) {
     const l = parseFloat($('edit-refuel-liters').value) || 0;
     const p = parseFloat($('edit-refuel-price').value) || 0;
     const t = parseFloat($('edit-refuel-total').value) || 0;
-    if (l && p && !t) {
+    if (sourceId === 'edit-refuel-liters' && l && p) {
       $('edit-refuel-total').value = (l * p).toFixed(2);
-    } else if (t && l && !p) {
-      $('edit-refuel-price').value = (t / l).toFixed(3);
-    } else if (t && p && !l) {
+    } else if (sourceId === 'edit-refuel-price' && l && p) {
+      $('edit-refuel-total').value = (l * p).toFixed(2);
+    } else if (sourceId === 'edit-refuel-total' && t && p) {
       $('edit-refuel-liters').value = (t / p).toFixed(2);
+    } else if (sourceId === 'edit-refuel-total' && t && l) {
+      $('edit-refuel-price').value = (t / l).toFixed(3);
+    } else if (sourceId === 'edit-refuel-price' && t && !l) {
+      $('edit-refuel-liters').value = (t / p).toFixed(2);
+    } else if (sourceId === 'edit-refuel-liters' && t && !p) {
+      $('edit-refuel-price').value = (t / l).toFixed(3);
     }
   }
   ['edit-refuel-liters', 'edit-refuel-price', 'edit-refuel-total'].forEach(id => {
