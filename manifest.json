@@ -1,0 +1,12 @@
+{
+  "name": "AbastecIA",
+  "short_name": "AbastecIA",
+  "description": "Controle de Combustível",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a73e8",
+  "theme_color": "#1a73e8",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "512x512", "type": "image/svg+xml" }
+  ]
+}

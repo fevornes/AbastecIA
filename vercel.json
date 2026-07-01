@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cp index.html 404.html",
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

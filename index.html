@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AbastecIA</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a73e8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="AbastecIA">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>AbastecIA</h1>
+    <span style="font-size:.8rem;opacity:.8">Controle de Combustível</span>
+  </div>
+</header>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" data-tab="vehicles">Veículos</button>
+    <button class="tab" data-tab="refuels">Abastecimentos</button>
+    <button class="tab" data-tab="stations">Postos</button>
+  </div>
+
+  <div id="auth-screen" class="hidden"></div>
+
+  <div id="app">
+  <!-- Veículos -->
+  <div id="tab-vehicles" class="tab-content">
+    <div class="card">
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="text" id="vehicle-name" placeholder="Nome do veículo">
+        </div>
+        <div class="form-group">
+          <input type="text" id="vehicle-plate" placeholder="Placa (opcional)">
+        </div>
+        <button class="btn btn-primary" id="btn-add-vehicle">Adicionar</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Meus Veículos</h2>
+      <div id="vehicle-list"></div>
+    </div>
+  </div>
+
+  <!-- Abastecimentos -->
+  <div id="tab-refuels" class="tab-content hidden">
+    <div class="card">
+      <h2>Selecione um Veículo</h2>
+      <div class="form-group">
+        <select id="refuel-vehicle"><option value="">-- Selecione --</option></select>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row">
+        <div class="form-group">
+          <label>Data</label>
+          <input type="date" id="refuel-date">
+        </div>
+        <div class="form-group">
+          <label>KM</label>
+          <input type="number" step="0.1" id="refuel-km" placeholder="Ex: 15000">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label>Litros</label>
+          <input type="number" step="0.01" id="refuel-liters" placeholder="Ex: 45.5">
+        </div>
+        <div class="form-group">
+          <label>Preço por Litro (R$)</label>
+          <input type="number" step="0.001" id="refuel-price" placeholder="Ex: 5.899">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label>Valor Total (R$)</label>
+          <input type="number" step="0.01" id="refuel-total" placeholder="Calculado automaticamente">
+        </div>
+        <div class="form-group">
+          <label>Combustível</label>
+          <select id="refuel-fuel">
+            <option value="gasolina_comum">Gasolina Comum</option>
+            <option value="gasolina_aditivada">Gasolina Aditivada</option>
+            <option value="gasolina_premium">Gasolina Premium</option>
+            <option value="etanol">Etanol</option>
+            <option value="diesel">Diesel</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label>Cidade</label>
+          <select id="refuel-city"><option value="">-- Selecione --</option></select>
+        </div>
+        <div class="form-group">
+          <label>Posto</label>
+          <select id="refuel-station"><option value="">-- Selecione uma cidade --</option></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Observações</label>
+        <textarea id="refuel-notes" rows="2"></textarea>
+      </div>
+      <div class="row">
+        <div class="form-group" style="display:flex;align-items:center">
+          <label style="margin-bottom:0;cursor:pointer;display:flex;align-items:center;gap:6px">
+            <input type="checkbox" id="refuel-fulltank" checked style="width:16px;height:16px"> Tanque completo
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Comprovante (foto)</label>
+          <input type="file" id="refuel-receipt" accept="image/*">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="btn-add-refuel">Registrar Abastecimento</button>
+    </div>
+    <div class="card">
+      <h2>Histórico</h2>
+      <div id="refuel-stats"></div>
+      <div id="chart-container" class="chart-container"></div>
+      <div id="refuel-list"></div>
+    </div>
+  </div>
+
+  <!-- Postos -->
+  <div id="tab-stations" class="tab-content hidden">
+    <div class="card">
+      <div class="form-inline">
+        <div class="form-group">
+          <input type="text" id="station-name" placeholder="Nome do posto">
+        </div>
+        <div class="form-group">
+          <input type="text" id="station-address" placeholder="Endereço (opcional)">
+        </div>
+        <div class="form-group">
+          <input type="text" id="station-city" placeholder="Cidade">
+        </div>
+        <div class="form-group" style="max-width:80px">
+          <input type="text" id="station-state" placeholder="UF" maxlength="2">
+        </div>
+        <button class="btn btn-primary" id="btn-add-station">Adicionar</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="form-inline">
+        <div class="form-group">
+          <select id="filter-city" style="max-width:300px">
+            <option value="">-- Todas as cidades --</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="station-list"></div>
+  </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script>
+function showLogoutButton() {
+  const existing = document.getElementById('logout-btn');
+  if (existing) return;
+
+  const darkBtn = document.createElement('button');
+  darkBtn.id = 'dark-toggle';
+  darkBtn.className = 'dark-toggle';
+  darkBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+  darkBtn.addEventListener('click', toggleDark);
+  document.body.appendChild(darkBtn);
+
+  const btn = document.createElement('button');
+  btn.id = 'logout-btn';
+  btn.className = 'logout-btn';
+  btn.textContent = 'Sair';
+  btn.addEventListener('click', () => {
+    logout();
+    document.getElementById('logout-btn')?.remove();
+    document.getElementById('dark-toggle')?.remove();
+    showLoginScreen();
+  });
+  document.body.appendChild(btn);
+}
+
+(async function() {
+  const ok = await initAuth();
+  if (ok) {
+    startApp();
+    showLogoutButton();
+  } else {
+    showLoginScreen();
+  }
+})();
+
+// Register service worker for PWA
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
+</body>
+</html>
