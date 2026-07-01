@@ -16,21 +16,37 @@
 <body>
 <header>
   <div class="container">
-    <h1>AbastecIA</h1>
-    <span style="font-size:.8rem;opacity:.8">Controle de Combustível</span>
+    <div class="header-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v17"/><path d="M15 10h2a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2v0a2 2 0 0 0 2-2V9l-3-3"/><path d="M3 22h12"/><path d="M7 9v4"/></svg>
+      <div>
+        <h1>AbastecIA</h1>
+        <span class="subtitle">Controle de Combustível</span>
+      </div>
+    </div>
   </div>
 </header>
 
 <div class="container">
   <div class="tabs">
-    <button class="tab active" data-tab="vehicles">Veículos</button>
-    <button class="tab" data-tab="refuels">Abastecimentos</button>
-    <button class="tab" data-tab="stations">Postos</button>
+    <button class="tab active" data-tab="dashboard">📊 Painel</button>
+    <button class="tab" data-tab="vehicles">🚗 Veículos</button>
+    <button class="tab" data-tab="refuels">⛽ Abastecimentos</button>
+    <button class="tab" data-tab="stations">🏪 Postos</button>
   </div>
 
   <div id="auth-screen" class="hidden"></div>
 
   <div id="app">
+  <!-- Dashboard -->
+  <div id="tab-dashboard" class="tab-content">
+    <div id="savings-banner"></div>
+    <div id="dashboard-grid" class="dashboard-grid"></div>
+    <div class="card" style="margin-top:8px">
+      <h2>🏪 Postos Mais Baratos</h2>
+      <div id="compare-stations"></div>
+    </div>
+  </div>
+
   <!-- Veículos -->
   <div id="tab-vehicles" class="tab-content">
     <div class="card">
@@ -41,7 +57,7 @@
         <div class="form-group">
           <input type="text" id="vehicle-plate" placeholder="Placa (opcional)">
         </div>
-        <button class="btn btn-primary" id="btn-add-vehicle">Adicionar</button>
+        <button class="btn btn-primary" id="btn-add-vehicle">➕ Adicionar</button>
       </div>
     </div>
     <div class="card">
@@ -120,12 +136,22 @@
           <input type="file" id="refuel-receipt" accept="image/*">
         </div>
       </div>
-      <button class="btn btn-primary" id="btn-add-refuel">Registrar Abastecimento</button>
+      <button class="btn btn-primary" id="btn-add-refuel">➕ Registrar Abastecimento</button>
     </div>
     <div class="card">
-      <h2>Histórico</h2>
+      <h2>📊 Estatísticas</h2>
       <div id="refuel-stats"></div>
       <div id="chart-container" class="chart-container"></div>
+      <div class="export-bar">
+        <button class="btn btn-outline btn-sm" id="btn-export-csv">📥 Exportar CSV</button>
+      </div>
+      <div class="period-filter">
+        <button class="btn btn-outline btn-sm period-btn active" data-period="all">Todos</button>
+        <button class="btn btn-outline btn-sm period-btn" data-period="month">Este Mês</button>
+        <button class="btn btn-outline btn-sm period-btn" data-period="3months">3 Meses</button>
+        <button class="btn btn-outline btn-sm period-btn" data-period="6months">6 Meses</button>
+        <button class="btn btn-outline btn-sm period-btn" data-period="year">Este Ano</button>
+      </div>
       <div id="refuel-list"></div>
     </div>
   </div>
@@ -146,7 +172,7 @@
         <div class="form-group" style="max-width:80px">
           <input type="text" id="station-state" placeholder="UF" maxlength="2">
         </div>
-        <button class="btn btn-primary" id="btn-add-station">Adicionar</button>
+        <button class="btn btn-primary" id="btn-add-station">➕ Adicionar</button>
       </div>
     </div>
     <div class="card">
