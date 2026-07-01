@@ -196,19 +196,15 @@ $('refuel-vehicle').addEventListener('change', () => {
   else { $('refuel-list').innerHTML = ''; $('refuel-stats').innerHTML = ''; destroyChart(); }
 });
 
-function calcRefuel(source) {
+function calcRefuel(sourceId) {
   const l = parseFloat($('refuel-liters').value) || 0;
   const p = parseFloat($('refuel-price').value) || 0;
   const t = parseFloat($('refuel-total').value) || 0;
-  const fields = { liters: 'refuel-liters', price: 'refuel-price', total: 'refuel-total' };
-  if (source !== 'liters' && l && p) {
-    // calc total
+  if (l && p && !t) {
     $('refuel-total').value = (l * p).toFixed(2);
-  } else if (source !== 'price' && t && l) {
-    // calc price per liter
+  } else if (t && l && !p) {
     $('refuel-price').value = (t / l).toFixed(3);
-  } else if (source !== 'total' && t && p) {
-    // calc liters
+  } else if (t && p && !l) {
     $('refuel-liters').value = (t / p).toFixed(2);
   }
 }
@@ -455,15 +451,15 @@ function openEditRefuelModal(r) {
   document.body.appendChild(overlay);
 
   // Auto-calc any two of three
-  function calcEditRefuel(source) {
+  function calcEditRefuel(sourceId) {
     const l = parseFloat($('edit-refuel-liters').value) || 0;
     const p = parseFloat($('edit-refuel-price').value) || 0;
     const t = parseFloat($('edit-refuel-total').value) || 0;
-    if (source !== 'liters' && l && p) {
+    if (l && p && !t) {
       $('edit-refuel-total').value = (l * p).toFixed(2);
-    } else if (source !== 'price' && t && l) {
+    } else if (t && l && !p) {
       $('edit-refuel-price').value = (t / l).toFixed(3);
-    } else if (source !== 'total' && t && p) {
+    } else if (t && p && !l) {
       $('edit-refuel-liters').value = (t / p).toFixed(2);
     }
   }
